@@ -19,7 +19,7 @@ renew_timestamp=renew_plex_timestamp
 
 generate_p12=false
 current_date=`date +"%s"`
-current_certificate_date=`openssl x509 -enddate -noout -in "$letsencrypt_cert_folder/cert.pem" | cut -d'=' -f2`
+current_certificate_date=`openssl x509 -enddate -noout -in "$letsencrypt_cert_folder/RSA-cert.pem" | cut -d'=' -f2`
 current_certificate_timestamp=`date -d "$current_certificate_date" +"%s"`
 
 # check if the renew_timestamp file exists
@@ -50,7 +50,11 @@ fi
 # generate a new certificate file if necessary, and restart Plex
 if expr "$generate_p12" "=" "true" > /dev/null; then
   echo "Generating the p12 certificate file..."
-  openssl pkcs12 -export -out "$p12_file_path" -in "$letsencrypt_cert_folder/cert.pem" -inkey "$letsencrypt_cert_folder/privkey.pem" -certfile "$letsencrypt_cert_folder/chain.pem" -name "$domain_name" -password pass:$p12cert_password
+  openssl pkcs12 -export -out "$p12_file_path" \
+    -in "$letsencrypt_cert_folder/RSA-cert.pem" \
+    -inkey "$letsencrypt_cert_folder/RSA-privkey.pem" \
+    -certfile "$letsencrypt_cert_folder/RSA-fullchain.pem" \
+    -name "$domain_name" -password pass:$p12cert_password
   chmod +r "$p12_file_path"
   chown admin:users "$p12_file_path"
   echo "Restarting Plex Media Server..."
