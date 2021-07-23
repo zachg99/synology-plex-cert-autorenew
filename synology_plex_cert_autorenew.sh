@@ -58,7 +58,6 @@ if expr "$generate_p12" "=" "true" > /dev/null; then
   chmod +r "$p12_file_path"
   chown admin:users "$p12_file_path"
   echo "Restarting Plex Media Server..."
-  sh /var/packages/Plex\ Media\ Server/scripts/start-stop-status stop
-  sh /var/packages/Plex\ Media\ Server/scripts/start-stop-status start
+  /bin/systemctl restart pkgctl-PlexMediaServer
   echo "Done."
 fi
