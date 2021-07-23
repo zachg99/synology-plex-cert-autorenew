@@ -2,7 +2,7 @@
 
 # CONFIGURATION
 
-script_folder=/var/services/homes/plex
+script_folder=/var/packages/PlexMediaServer/home/Plex\ Media\ Server
 # Domain Name for naming file and cert conversion
 domain_name=**SET VALUE**
 # p12 file
