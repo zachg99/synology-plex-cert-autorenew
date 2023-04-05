@@ -51,6 +51,7 @@ fi
 if expr "$generate_p12" "=" "true" > /dev/null; then
   echo "Generating the p12 certificate file..."
   openssl pkcs12 -export -out "$p12_file_path" \
+    -certpbe AES-256-CBC -keypbe AES-256-CBC -macalg SHA256 \
     -in "$letsencrypt_cert_folder/RSA-cert.pem" \
     -inkey "$letsencrypt_cert_folder/RSA-privkey.pem" \
     -certfile "$letsencrypt_cert_folder/RSA-fullchain.pem" \
